@@ -1,0 +1,104 @@
+﻿@using Dominio
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+   
+}
+<h1>Lista de Vuelos Disponibles</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Número Vuelo</th>
+            <th>Ruta</th>
+            <th>Avión</th>
+            <th>Frecuencia</th>
+            <th>Costo por Asiento</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    @foreach (Vuelo vuelo in ViewBag.Vuelos)
+
+    {
+        <tbody>
+            <tr>
+                <td>@vuelo.NumeroVuelo</td>
+                <td>@vuelo.DevolverAeropuertos()</td>
+                <td>@vuelo.Avion.Modelo</td>
+                <td>@vuelo.DevolverFrecuencia()</td>
+                <td>@vuelo.CalcularCostoPorAsiento()</td>
+                <td><a href="Pasaje/ComprarPasajes" type="submit">Comprar</a></td>
+
+            </tr>
+        </tbody>
+        
+    }
+
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+            margin: auto;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            box-shadow: 0 0 8px #0073e6;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #0073e6;
+            padding: 10px 15px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            vertical-align: middle;
+        }
+
+        thead th {
+            background: linear-gradient(90deg, #004080, #0073e6);
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #e6f0ff;
+        }
+
+        tbody tr:hover {
+            background-color: #cce0ff;
+            cursor: pointer;
+        }
+
+        h1 {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #004080;
+            margin-bottom: 25px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .frecuencia div {
+            margin: 2px 0;
+        }
+
+        button {
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+            button:hover {
+                background-color: #005bb5;
+            }
+    </style>
+   
+    </table>

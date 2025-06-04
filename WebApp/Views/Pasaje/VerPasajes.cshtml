@@ -1,0 +1,78 @@
+﻿@using Dominio;
+
+
+
+
+<h1>Lista Pasajes</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>RUTA</th>
+            <th>FECHA</th>
+            <th>PASAJERO</th>
+            <th>EQUIPAJE</th>
+            <th>PRECIO</th>
+        </tr>
+    </thead>
+    @foreach (Pasaje pasaje in ViewBag.listaPasajes)
+    {
+        <tbody>
+            <tr>
+                <td>@pasaje.Id</td>
+                <td>@pasaje.DevolverAeropuertos()</td>
+                <td>@pasaje.Fecha.ToString("dd/MM/yyyy")</td>
+                <td>@pasaje.DevolverNombrePasajero()</td>
+                <td>@pasaje.Equipaje</td>
+                <td>@pasaje.calcularPrecioPasaje().ToString("C")</td>
+            </tr>
+        </tbody>
+    }
+</table>
+
+
+<style>
+    table {
+        border-collapse: collapse;
+        width: 90%;
+        margin: auto;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        box-shadow: 0 0 8px #0073e6;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    th, td {
+        border: 1px solid #0073e6;
+        padding: 10px 15px;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+
+    thead th {
+        background: linear-gradient(90deg, #004080, #0073e6);
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.05em;
+    }
+
+    tbody tr:nth-child(even) {
+        background-color: #e6f0ff;
+    }
+
+    tbody tr:hover {
+        background-color: #cce0ff;
+        cursor: pointer;
+    }
+
+    h1 {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #004080;
+        margin-bottom: 25px;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+    }
+</style>
