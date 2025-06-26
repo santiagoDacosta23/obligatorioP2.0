@@ -276,6 +276,8 @@ namespace Dominio
                         filtrados.Add(vuelo);
                     }
                 }
+
+
                 // Solo uno de los dos
                 else if (!string.IsNullOrEmpty(iataSalida))
                 {
