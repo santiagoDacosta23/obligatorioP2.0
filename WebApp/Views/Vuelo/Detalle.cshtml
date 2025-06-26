@@ -1,0 +1,45 @@
+﻿@using Dominio
+@model Vuelo 
+
+
+<div class="card"
+     style="width: 100%; max-width: 800px; margin: auto; margin-top: 20px;
+            border: 2px solid #4CAF50; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: #e8f5e9; font-family: Arial, sans-serif;">
+
+    <div class="card-header"
+         style="background-color: #81c784; padding: 20px; border-top-left-radius: 10px; border-top-right-radius: 10px;">
+        <img src="https://cdn-icons-png.flaticon.com/512/3079/3079187.png"
+             alt="Vuelo" style="width: 40px; vertical-align: middle; margin-right: 10px;">
+        <h2 style="display: inline; color: white;">Detalle del Vuelo @Model.NumeroVuelo</h2>
+    </div>
+
+    <div class="card-body" style="padding: 20px; color: #2e7d32;">
+        <p><strong>Ruta:</strong> @Model.DevolverAeropuertos()</p>
+        <p><strong>Avión:</strong> @Model.Avion.Modelo</p>
+        <p><strong>Frecuencia:</strong> @Model.DevolverFrecuencia()</p>
+        <p><strong>Costo por Asiento:</strong> @Model.CalcularCostoPorAsiento()</p>
+
+        <form action="~/Pasaje/Add" method="post">
+            <input type="hidden" name="numeroVuelo" value="@Model.NumeroVuelo" />
+            <input type="date" name="fecha" />
+
+            <select name="tipoEquipaje">
+                <option value="">--------</option>
+                @foreach (string equipaje in Enum.GetNames(typeof(TipoEquipaje)))
+                {
+                    <option value="@equipaje">@equipaje</option>
+                }
+            </select>
+
+            <button type="submit" class="btn btn-success">Comprar</button>
+        </form>
+    </div>
+
+    <div class="card-footer" style="padding: 15px; background-color: #c8e6c9; text-align: right; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+        <a href="@Url.Action("VerVuelos", "Vuelo")"
+           style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px;">
+            Volver a la lista de vuelos
+        </a>
+    </div>
+</div>

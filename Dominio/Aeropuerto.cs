@@ -68,7 +68,14 @@ namespace Dominio
             }
         }
 
-       
+     
+        public override bool Equals(object? obj)
+        {
+            Aeropuerto aeropuertoOtro = obj as Aeropuerto;
+            return aeropuertoOtro != null && _IATA == aeropuertoOtro._IATA;
+        }
+
+
     }
 
 }

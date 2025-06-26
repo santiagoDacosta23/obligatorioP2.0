@@ -1,0 +1,124 @@
+﻿@using Dominio
+@model Ocasional
+@{
+    Layout = null;
+}
+
+
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-plane-departure"></i>
+        </div>
+        <h1>Registro Cliente Ocasional</h1>
+
+        <form asp-action="Registro" method="post">
+            <label>Nombre</label>
+            <input asp-for="Nombre" type="text" />
+
+            <label>Correo</label>
+            <input asp-for="Correo" type="email" />
+
+            <label>Cédula</label>
+            <input asp-for="Documento" type="text" />
+
+            <label>Nacionalidad</label>
+            <input asp-for="Nacionalidad" type="text" />
+
+            <label>Contraseña</label>
+            <input asp-for="Contrasenia" type="password" />
+
+
+            <button type="submit">Registrarse</button>
+        </form>
+
+        @if (ViewBag.Mensaje != null)
+        {
+            <p class="mensaje-error">@ViewBag.Mensaje</p>
+        }
+    </div>
+</body>
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro - Sistema de Vuelos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        body {
+            background: #e8f5e9;
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+            .login-container h1 {
+                color: #2e7d32;
+                margin-bottom: 20px;
+            }
+
+        .logo {
+            font-size: 50px;
+            color: #43a047;
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #2e7d32;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #a5d6a7;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        button {
+            background-color: #66bb6a;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+            button:hover {
+                background-color: #43a047;
+            }
+
+        .mensaje-error {
+            color: red;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+</html>
+

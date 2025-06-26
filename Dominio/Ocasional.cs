@@ -19,30 +19,55 @@ public class  Ocasional : Cliente
             set { _elegido = value; }
         }
 
-        public Ocasional(string nombre, string correo, string documento, string nacionalidad, string contrasenia, bool elegido)
-            : base(nombre,correo,documento,nacionalidad,contrasenia)
+        // constructor vacio: 
+        public Ocasional()
         {
-            _elegido = elegido;
-            
         }
 
+        public Ocasional(string nombre, string correo, string documento, string nacionalidad, string contrasenia)
+            :base(nombre,correo,documento,nacionalidad,contrasenia)
+        {
+            // elegide de forma random si el ocacional, es elegido o no: 
+            Random random = new Random();
+            _elegido = random.Next(2) == 0;
+        }
+
+        // valida 
         public override void Validar()
         {
-            base.Validar();
+            // valida que el nombre y nacionalidad no pueden ser 0
+            if (string.IsNullOrEmpty(Nombre) || string.IsNullOrEmpty(Nacionalidad))
+                throw new Exception("Nombre y nacionalidad no pueden estar vacíos.");
+            // docuemento menor a 6: 
+            if (string.IsNullOrEmpty(Documento) || Documento.Length <6)
+                throw new Exception("Documento inválido.");
 
         }
         
-
-        public void CambiarElegibilidad(bool elegido)
+        // esto elegibilidad: 
+        public void CambiarElegibilidad()
         {
-            _elegido = elegido;
+            if(elegido)
+            {
+                _elegido = false;
+            }
+            else
+            {
+                _elegido = true;
+            }
         }
 
+        //muestra si es elejido o no en la tabla : 
         public string ObtenerEstadoElegibilidad()
         {
             return _elegido ? "Elegible" : "No elegible";
         }
 
+        //Devuelve "selected" si el valor coincide con _elegido, de lo contrario devuelve una cadena vacía: 
+        public string ObtenerSeleccion(bool valor)
+        {
+            return _elegido == valor ? "selected" : "";
+        }
         //  mostrar la información del cliente ocasional
 
         public override string ObtenerInformacion()

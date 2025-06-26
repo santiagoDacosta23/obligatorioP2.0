@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dominio
 {
-    public abstract class Cliente : Usuario
+    public abstract class Cliente : Usuario, IComparable <Cliente>
     {
         private string _documento;
         private string _nombre;
@@ -28,13 +28,19 @@ namespace Dominio
             set { _nacionalidad = value; }
         }
 
-        public Cliente (string nombre, string correo, string documento, string nacionalidad, string contrasenia)
-            :base(correo, contrasenia)
+        // el constructor vacio recibe objetos completos: ahre 
+        public Cliente()
+        {
+        }
+
+        public Cliente(string nombre, string correo, string documento, string nacionalidad, string contrasenia)
+           : base(correo, contrasenia)
         {
             _documento = documento;
             _nombre = nombre;
             _nacionalidad = nacionalidad;
         }
+
 
 
         public override void Validar()
@@ -56,12 +62,24 @@ namespace Dominio
         }
 
 
-       
         public override string ToString()
         {
             return $"Nombre: {Nombre}\nCorreo: {Correo}\nDocumento: {Documento}\nNacionalidad: {Nacionalidad}";
         }
         public abstract double ObtenerDescuento(TipoEquipaje e);
+
+        //ordena los clientes por Documento: 
+        public int CompareTo(Cliente other)
+        {
+            return this.Documento.CompareTo(other.Documento);
+        }
+
+        public override bool Equals(object? obj)
+        {
+            Cliente cli = obj as Cliente;
+            return cli != null && _documento == cli.Documento;
+        }
+
 
 
     }

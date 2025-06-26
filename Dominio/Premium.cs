@@ -16,6 +16,14 @@ namespace Dominio
             _puntos = puntos;
         }
 
+        //get y set:
+        public int Puntos
+        {
+            get { return _puntos; }
+            set { _puntos = value; }
+        }
+
+        //Metodo de validacion: 
         public override void Validar()
         {
             base.Validar();          
@@ -25,22 +33,26 @@ namespace Dominio
             }
         }
 
-        public int Puntos
-        {
-            get { return _puntos; }
-            set { _puntos = value; }
-        }
-
+    
 
         public void ModificarPuntos(int puntos)
         {
-            _puntos = puntos;
+            if (puntos >= 0)
+            {
+                _puntos = puntos;
+            }
+            else
+            {
+                throw new Exception("Los puntos no pueden ser negativos.");
+            }
         }
 
         public override string ObtenerInformacion()
         {
             return $">> Cliente Premium:\nNombre: {Nombre}, Correo: {Correo}, Puntos: {Puntos}";
         }
+
+
         //calcular precio pasaje : 
         public override double ObtenerDescuento(TipoEquipaje e)
         {

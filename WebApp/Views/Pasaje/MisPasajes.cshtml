@@ -1,0 +1,35 @@
+﻿@using Dominio;
+@model List<Pasaje>
+
+<h1>Mis Pasajes</h1>
+
+@if (Model != null && Model.Count > 0)
+{
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Ruta</th>
+                    <th>Fecha</th>
+                    <th>Equipaje</th>
+                    <th>Precio</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (Pasaje p in Model)
+            {
+                        <tr>
+                            <td>@p.Id</td>
+                            <td>@p.Vuelo.DevolverAeropuertos()</td>
+                            <td>@p.Fecha.ToShortDateString()</td>
+                            <td>@p.Equipaje</td>
+                            <td>@p.PrecioPasaje.ToString("0.00")</td>
+                        </tr>
+            }
+            </tbody>
+        </table>
+}
+else
+{
+        <p>No tenés pasajes registrados.</p>
+}

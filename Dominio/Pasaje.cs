@@ -20,54 +20,7 @@ namespace Dominio
         private TipoEquipaje _equipaje;
         private double _precioPasaje;
 
-        public string DevolverAeropuertos()
-        {
-            return _vuelo.DevolverAeropuertos();
-        }
-        public string DevolverNombrePasajero()
-        {
-            return _pasajero.Nombre;
-        }
-
-
-        public void Validar()
-        {
-            if (_precioPasaje < 0)
-            {
-                throw new Exception("El precio debe ser mayor a 0");
-            }
-        }
-
-
-        public Pasaje(Vuelo vuelo, DateTime fecha, Cliente pasajero, TipoEquipaje equipaje, double precioPasaje)
-        {
-            if (vuelo == null)
-            {
-                throw new ArgumentException("El vuelo no puede ser nulo.");
-            }
-
-            if (pasajero == null)
-            {
-                throw new ArgumentException("El pasajero no puede ser nulo.");
-            }
-
-            //  el tipo de equipaje sea uno de los tres posibles
-            if (!Enum.IsDefined(typeof(TipoEquipaje), equipaje))
-            {
-                throw new ArgumentException("El tipo de equipaje debe ser 'LIGHT', 'CABINA' o 'BODEGA'.");
-            }
-
-         
-            _id = ++_ultimoId;
-            _vuelo = vuelo;
-            _fecha = fecha;
-            _pasajero = pasajero;
-            _equipaje = equipaje;
-            _precioPasaje = precioPasaje;
-
-
-        }
-
+        //get y set : 
         public int Id
         {
             get { return _id; }
@@ -95,11 +48,81 @@ namespace Dominio
 
         public double PrecioPasaje
         {
-            get { return _precioPasaje; }
+            get { return CalcularPrecioPasaje(); }
+        }
+        public string DevolverAeropuertos()
+        {
+            return _vuelo.DevolverAeropuertos();
+        }
+        public string DevolverNombrePasajero()
+        {
+            return _pasajero.Nombre;
         }
 
+        //Constructor: 
+        public Pasaje(Vuelo vuelo, DateTime fecha, Cliente pasajero, TipoEquipaje equipaje, double precioPasaje)
+        {
+       
+            _id = ++_ultimoId;
+            _vuelo = vuelo;
+            _fecha = fecha;
+            _pasajero = pasajero;
+            _equipaje = equipaje;
+            _precioPasaje = precioPasaje;
+        }
+
+
+        private DiaSemana ConvertirDia(DateTime fecha)
+        {
+            switch (fecha.DayOfWeek)
+            {
+                case DayOfWeek.Monday: return DiaSemana.Lunes;
+                case DayOfWeek.Tuesday: return DiaSemana.Martes;
+                case DayOfWeek.Wednesday: return DiaSemana.Miercoles;
+                case DayOfWeek.Thursday: return DiaSemana.Jueves;
+                case DayOfWeek.Friday: return DiaSemana.Viernes;
+                case DayOfWeek.Saturday: return DiaSemana.Sabado;
+                case DayOfWeek.Sunday: return DiaSemana.Domingo;
+                default: throw new ArgumentException("Día inválido");
+            }
+        }
+
+
+        //Metodo Validar:
+        public void Validar()
+        {
+            if (_vuelo == null)
+            {
+                throw new ArgumentException("El vuelo no puede ser nulo.");
+            }
+
+            if (_pasajero == null)
+            {
+                throw new ArgumentException("El pasajero no puede ser nulo.");
+            }
+
+            // Validar tipo de equipaje
+            if (!Enum.IsDefined(typeof(TipoEquipaje), _equipaje))
+            {
+                throw new ArgumentException("El tipo de equipaje debe ser 'LIGHT', 'CABINA' o 'BODEGA'.");
+            }
+
+            if (_precioPasaje < 0)
+            {
+                throw new Exception("El precio debe ser mayor a 0");
+            }
+
+            // Validar frecuencia
+            DiaSemana diaPasaje = ConvertirDia(_fecha);
+            if (!_vuelo.Frecuencia.Contains(diaPasaje))
+            {
+                throw new Exception("La fecha ingresada no coincide con la frecuencia del vuelo.");
+            }
+        }
+
+
         // calcular costo pasaje: 
-        public double calcularPrecioPasaje()
+        public double CalcularPrecioPasaje()
         { 
              double totalPasaje = 0;
              double costoPorAsiento = Vuelo.CalcularCostoPorAsiento();
@@ -115,13 +138,26 @@ namespace Dominio
         {
             return $"Id pasaje:{_id} \n" +
                 $" Nombre pasajero:{_pasajero.Nombre}" +
-                $" \n Precio pasje:{calcularPrecioPasaje()} \n Fecha:{_fecha} " +
+                $" \n Precio pasje:{CalcularPrecioPasaje()} \n Fecha:{_fecha} " +
                 $"\n Numero de vuelo:{_vuelo.NumeroVuelo} \n  ";
         }
 
+        //Ordena los pasajes por fecha: 
         public int CompareTo(Pasaje? other)
         {
             return _fecha.CompareTo(other.Fecha);
+        }
+        //equals
+        public override bool Equals(object obj)
+        {
+            if (obj == null || GetType() != obj.GetType())
+                return false;
+
+            Pasaje otro = (Pasaje)obj;
+
+            return _vuelo.NumeroVuelo == otro._vuelo.NumeroVuelo &&
+                   _fecha.Date == otro._fecha.Date &&
+                   _pasajero.Correo == otro._pasajero.Correo;
         }
     }
 

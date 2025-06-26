@@ -8,52 +8,14 @@ namespace Dominio
 {
 
 
-    public class Vuelo
+    public class Vuelo : IValidable
     {
         private string _numeroVuelo;
         private Ruta _ruta;
         private Avion _avion;
         private List <DiaSemana> _frecuencia;
 
-        public string DevolverAeropuertos()
-        {
-            return _ruta.DevolverAeropuertos();
-        }
-
-
-        public Vuelo(string numeroVuelo, Ruta ruta, Avion avion, List<DiaSemana> frecuencia)
-        {
-            if (!EsNumeroVueloValido(numeroVuelo))
-            {
-                throw new Exception("El número de vuelo no es válido.");
-            }
-
-            if (ruta == null)
-            {
-                throw new Exception("La ruta no puede ser nula.");
-            }
-
-            if (avion == null)
-            {
-                throw new Exception("El avión no puede ser nulo.");
-            }
-
-            if (frecuencia == null || frecuencia.Count == 0)
-            {
-                throw new Exception("Debe indicarse al menos un día de frecuencia.");
-            }
-
-            if (avion.Alcance < ruta.Distancia)
-            {
-                throw new Exception("El alcance del avión no permite cubrir la distancia de la ruta.");
-            }
-
-            _numeroVuelo = numeroVuelo;
-            _ruta = ruta;
-            _avion = avion;
-            _frecuencia = frecuencia;
-        }
-
+        //get y set
         public string NumeroVuelo
         {
             get { return _numeroVuelo; }
@@ -77,8 +39,65 @@ namespace Dominio
             get { return _frecuencia; }
             set { _frecuencia = value; }
         }
+        public string DevolverAeropuertos()
+        {
+            return _ruta.DevolverAeropuertos();
+        }
 
-        //METODO VALIDACION DE VUELO 
+        //constructor 
+        public Vuelo(string numeroVuelo, Ruta ruta, Avion avion, List<DiaSemana> frecuencia)
+        {
+            
+            _numeroVuelo = numeroVuelo;
+            _ruta = ruta;
+            _avion = avion;
+            _frecuencia = frecuencia;
+        }
+
+       
+
+        //METODO VALIDACION DE VUELO: 
+        public void Validar()
+        {
+            if (!EsNumeroVueloValido(_numeroVuelo))
+            {
+                throw new Exception("El número de vuelo no es válido.");
+            }
+
+            if (_ruta == null)
+            {
+                throw new Exception("La ruta no puede ser nula.");
+            }
+
+            if (_avion == null)
+            {
+                throw new Exception("El avión no puede ser nulo.");
+            }
+
+            if (_frecuencia == null || _frecuencia.Count == 0)
+            {
+                throw new Exception("Debe indicarse al menos un día de frecuencia.");
+            }
+
+            if (_avion.Alcance < _ruta.Distancia)
+            {
+                throw new Exception("El alcance del avión no permite cubrir la distancia de la ruta.");
+            }
+
+
+        }
+
+        //obtener IATA de salida y llegada: 
+        public string ObtenerIataSalida()
+        {
+            return Ruta.AeropuertoSalida.CodigoIATA;
+        }
+
+        public string ObtenerIataLlegada()
+        {
+            return Ruta.AeropuertoLlegada.CodigoIATA;
+        }
+
         //valida el vuelo a traves de su numero. 
         public static bool EsNumeroVueloValido(string numeroVuelo)
         {

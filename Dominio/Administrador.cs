@@ -35,5 +35,11 @@ namespace Dominio
             return $">> Administrador:\nCorreo: {Correo}, Apodo: {Apodo}";
         }
 
+        public override bool Equals(object? obj)
+        {
+            return base.Equals(obj);
+        }
+
+
     }
 }

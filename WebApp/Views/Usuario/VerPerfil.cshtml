@@ -1,0 +1,62 @@
+﻿@using Dominio
+@model Cliente
+
+<body>
+    <div class="perfil-container">
+        <h1>Perfil del Cliente</h1>
+
+        <div class="dato"><strong>Nombre:</strong> @Model.Nombre</div>
+        <div class="dato"><strong>Correo:</strong> @Model.Correo</div>
+        <div class="dato"><strong>Documento:</strong> @Model.Documento</div> 
+        <div class="dato"><strong>Nacionalidad:</strong> @Model.Nacionalidad</div>
+
+        @if (Model is Premium premium)
+        {
+            <div class="puntos">
+                Puntos acumulados: @premium.Puntos
+            </div>
+        }
+    </div>
+</body>
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Perfil del Cliente</title>
+    <style>
+        body {
+            background-color: #e9f5ec;
+            font-family: Arial, sans-serif;
+            color: #2e7d32;
+            padding: 20px;
+        }
+
+        .perfil-container {
+            background-color: #c8e6c9;
+            border: 1px solid #81c784;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+        }
+
+            .perfil-container h1 {
+                text-align: center;
+                color: #1b5e20;
+            }
+
+        .dato {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .puntos {
+            background-color: #a5d6a7;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+

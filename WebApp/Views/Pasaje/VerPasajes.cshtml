@@ -25,7 +25,7 @@
                 <td>@pasaje.Fecha.ToString("dd/MM/yyyy")</td>
                 <td>@pasaje.DevolverNombrePasajero()</td>
                 <td>@pasaje.Equipaje</td>
-                <td>@pasaje.calcularPrecioPasaje().ToString("C")</td>
+                <td>@pasaje.CalcularPrecioPasaje().ToString("C")</td>
             </tr>
         </tbody>
     }
@@ -38,20 +38,21 @@
         width: 90%;
         margin: auto;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        box-shadow: 0 0 8px #0073e6;
-        border-radius: 8px;
+        box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+        border-radius: 10px;
         overflow: hidden;
+        background-color: #ffffff;
     }
 
     th, td {
-        border: 1px solid #0073e6;
+        border: 1px solid #a5d6a7;
         padding: 10px 15px;
         text-align: center;
         transition: background-color 0.3s ease;
     }
 
     thead th {
-        background: linear-gradient(90deg, #004080, #0073e6);
+        background: linear-gradient(90deg, #388e3c, #66bb6a);
         color: white;
         font-weight: 600;
         font-size: 1rem;
@@ -59,17 +60,17 @@
     }
 
     tbody tr:nth-child(even) {
-        background-color: #e6f0ff;
+        background-color: #e8f5e9;
     }
 
     tbody tr:hover {
-        background-color: #cce0ff;
+        background-color: #c8e6c9;
         cursor: pointer;
     }
 
     h1 {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: #004080;
+        color: #2e7d32;
         margin-bottom: 25px;
         text-align: center;
         text-transform: uppercase;

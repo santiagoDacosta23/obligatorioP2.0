@@ -1,0 +1,72 @@
+﻿@using Dominio
+
+<h2 style="color: #4caf50;">Listado de Clientes</h2>
+
+@if (ViewBag.Mensaje != null)
+{
+    <div style="margin-bottom: 10px; padding: 8px; background-color: #e0f2f1; color: #00796b; border-radius: 5px;">
+        <strong>@ViewBag.Mensaje</strong>
+    </div>
+}
+
+<table style="width: 100%; border-collapse: collapse;" border="1" cellpadding="8">
+    <thead style="background-color: #4caf50; color: white;">
+        <tr>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Documento</th>
+            <th>Nacionalidad</th>
+            <th>Tipo</th>
+            <th>Editar</th>
+            <th>Valor Actual</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Cliente cliente in ViewBag.Clientes)
+        {
+            <form method="post" asp-action="ActualizarCliente" asp-controller="Administrador">
+            <tr>
+                <td>@cliente.Nombre</td>
+                <td>@cliente.Correo</td>
+                <td>@cliente.Documento</td>
+                <td>@cliente.Nacionalidad</td>
+                <td>@(cliente is Premium ? "Premium" : "Ocasional")</td>
+
+                <td>
+                    <input type="hidden" name="Documento" value="@cliente.Documento" />
+
+                        @if (cliente is Premium)
+                        {
+                            Premium c = (Premium)cliente;
+                        <input type="number" name="Puntos" value="@c.Puntos" min="0" />
+                        }
+                        else if (cliente is Ocasional)
+                        {
+                            Ocasional c = (Ocasional)cliente;
+                        <select name="Elegible">
+                            <option value="true" selected="@(c.elegido ? "selected" : null)">Sí</option>
+                            <option value="false" selected="@(c.elegido ? null : "selected")">No</option>
+                        </select>
+                        }
+
+                    <br />
+                    <button type="submit">Guardar</button>
+                </td>
+
+                <td>
+                        @if (cliente is Premium)
+                        {
+                            Premium c = (Premium)cliente;
+                            @:Puntos: @c.Puntos
+                        }
+                        else if (cliente is Ocasional)
+                        {
+                            Ocasional c = (Ocasional)cliente;
+                            @:Elegible: @(c.elegido ? "Sí" : "No")
+                        }
+                </td>
+            </tr>
+            </form>
+        }
+    </tbody>
+</table>

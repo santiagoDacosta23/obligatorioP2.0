@@ -7,7 +7,7 @@ using Dominio;
 
 namespace Dominio
 {
-    public class Avion:IValidable
+    public class Avion : IValidable
     {
         private string _fabricante;
         private string _modelo;
@@ -76,7 +76,16 @@ namespace Dominio
                 throw new Exception("El costo por KM debe ser mayor a 0");
             }
         }
-     
-        
+
+
+
+        // equals de Avion : 
+        public override bool Equals(object? obj)
+        {
+            Avion avion = obj as Avion;
+            return avion != null && _fabricante == avion.Fabricante && _modelo == avion.Modelo;
+        }
+
+
     }
 }
